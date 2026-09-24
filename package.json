@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
+    "postinstall": "node -e \"try { const p = 'node_modules/@react-pdf/hyphenate/package.json'; const fs = require('fs'); if (fs.existsSync(p)) { const j = JSON.parse(fs.readFileSync(p, 'utf8')); if (!j.exports['./*'].default) { j.exports['.'].default = './lib/index.js'; j.exports['./*'].default = './lib/*.js'; fs.writeFileSync(p, JSON.stringify(j, null, 2)); } } } catch(e){}\"",
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.9.0",
     "bcryptjs": "^3.0.3",
     "jsdom": "^29.1.1",
     "mongoose": "^9.8.1",

@@ -94,7 +94,41 @@ export default async function EmployersPage() {
             </Link>
           </div>
 
-          {/* Card 3: Employee (Admin only) */}
+          {/* Card 3: Offer Letter */}
+          <div style={{ backgroundColor: "#ffffff", border: "1px solid #d1d5db", borderRadius: "2px", padding: "28px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                <h3 style={{ fontSize: "20px", color: "#1a1f36", margin: 0, fontWeight: "700" }}>
+                  Grant / Offer Letter
+                </h3>
+                <span style={{ fontSize: "11px", backgroundColor: "#ecfdf5", color: "#065f46", border: "1px solid #a7f3d0", padding: "2px 8px", borderRadius: "10px", fontWeight: "600" }}>
+                  Official INZ PDF
+                </span>
+              </div>
+              <p style={{ color: "#4b5563", fontSize: "14px", lineHeight: "1.6", margin: "0 0 24px 0" }}>
+                Generate official 2-page Grant Letters of Sponsorship with dynamic variable forms, instant live preview, and PDF download.
+              </p>
+            </div>
+            <Link
+              href="/employers/offer-letter"
+              style={{
+                display: "inline-block",
+                textAlign: "center",
+                padding: "11px 20px",
+                backgroundColor: "#065f46",
+                color: "#ffffff",
+                textDecoration: "none",
+                borderRadius: "2px",
+                fontWeight: "bold",
+                fontSize: "14px",
+                boxShadow: "0 2px 4px rgba(6, 95, 70, 0.15)",
+              }}
+            >
+              Generate Offer Letter &rarr;
+            </Link>
+          </div>
+
+          {/* Card 4: Employee (Admin only) */}
           {role === "admin" && (
             <div style={{ backgroundColor: "#ffffff", border: "1px solid #d1d5db", borderRadius: "2px", padding: "28px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
               <div>

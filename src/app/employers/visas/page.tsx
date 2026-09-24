@@ -268,28 +268,51 @@ export default function VisasManagementPage() {
               Review, assign, and update applicant visa records and status assessments.
             </p>
           </div>
-          <button 
-            onClick={() => setIsCreateModalOpen(true)} 
-            style={{ 
-              backgroundColor: "#c60c46", 
-              color: "#ffffff", 
-              border: "none", 
-              padding: "10px 20px", 
-              borderRadius: "3px", 
-              fontWeight: "600", 
-              fontSize: "13px",
-              cursor: "pointer", 
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              boxShadow: "0 2px 4px rgba(198, 12, 70, 0.15)",
-              transition: "all 0.15s ease" 
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#a8093b")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#c60c46")}
-          >
-            <span>+</span> Create Visa
-          </button>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <Link
+              href="/employers/offer-letter"
+              style={{
+                backgroundColor: "#065f46",
+                color: "#ffffff",
+                textDecoration: "none",
+                padding: "10px 18px",
+                borderRadius: "3px",
+                fontWeight: "600",
+                fontSize: "13px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                boxShadow: "0 2px 4px rgba(6, 95, 70, 0.15)",
+                transition: "all 0.15s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#044e39")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#065f46")}
+            >
+              <span>📄</span> Offer Letter
+            </Link>
+            <button 
+              onClick={() => setIsCreateModalOpen(true)} 
+              style={{ 
+                backgroundColor: "#c60c46", 
+                color: "#ffffff", 
+                border: "none", 
+                padding: "10px 20px", 
+                borderRadius: "3px", 
+                fontWeight: "600", 
+                fontSize: "13px",
+                cursor: "pointer", 
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                boxShadow: "0 2px 4px rgba(198, 12, 70, 0.15)",
+                transition: "all 0.15s ease" 
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#a8093b")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#c60c46")}
+            >
+              <span>+</span> Create Visa
+            </button>
+          </div>
         </div>
 
         {/* Toolbar & Search Controls */}
