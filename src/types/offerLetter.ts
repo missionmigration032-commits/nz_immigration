@@ -2,10 +2,13 @@ export interface OfferLetterData {
   // Sponsor Details
   sponsorName: string;
   sponsorAddress: string;
+  sponsorWebsite?: string;
+  sponsorEmails?: string[];
   clientId: string;
   sponsorshipApprovalId: string;
   fileNumber: string;
   sponsorshipFeeReceiptNumber: string;
+  monthlySalary?: string;
   dateOfSponsorshipApproval: string;
 
   // Candidate Details
@@ -19,6 +22,7 @@ export interface OfferLetterData {
 
   // Customization (Optional overrides with reference defaults)
   letterTitle?: string;
+  salaryLabel?: string;
   authorizedNote?: string;
   bodyParagraph1?: string;
   bodyParagraph2?: string;
@@ -29,10 +33,13 @@ export const DEFAULT_OFFER_LETTER_DATA: OfferLetterData = {
   // Sponsor Details (from reference)
   sponsorName: "HD Contractor Limited",
   sponsorAddress: "54B Tidal Road, Māngere, Auckland 2022, New Zealand",
+  sponsorWebsite: "www.hdcontractor.co.nz",
+  sponsorEmails: ["info@hdcontractor.co.nz", "support@hdcontractor.co.nz"],
   clientId: "15622175210",
   sponsorshipApprovalId: "1740568430",
   fileNumber: "ABD2026/420367",
   sponsorshipFeeReceiptNumber: "100001750031",
+  monthlySalary: "$5,000",
   dateOfSponsorshipApproval: "03 September 2026",
 
   // Candidate Details (from reference)

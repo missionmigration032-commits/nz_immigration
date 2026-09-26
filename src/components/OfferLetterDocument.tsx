@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   quoteLabel: {
-    width: 175,
+    width: 180,
     fontSize: 9.6,
   },
   quoteValue: {
@@ -92,9 +92,32 @@ const styles = StyleSheet.create({
     fontSize: 9.8,
     marginBottom: 2,
   },
+  sponsorDetail: {
+    fontSize: 9.4,
+    marginBottom: 2,
+  },
+  sponsorBold: {
+    fontWeight: "bold",
+  },
+  sponsorLink: {
+    color: "#000000",
+    textDecoration: "none",
+  },
+  sponsorEmailsContainer: {
+    marginBottom: 1,
+  },
+  sponsorEmailsRow: {
+    flexDirection: "row",
+    marginBottom: 2,
+  },
+  sponsorEmailCol: {
+    width: "50%",
+    paddingRight: 8,
+  },
   sponsorAddress: {
     fontWeight: "bold",
     fontSize: 9.8,
+    marginTop: 1,
   },
   letterTitle: {
     fontWeight: "bold",
@@ -238,6 +261,12 @@ export const OfferLetterDocument: React.FC<OfferLetterDocumentProps> = ({ data }
               <Text style={styles.quoteValue}>{data.sponsorshipFeeReceiptNumber}</Text>
             </View>
             <View style={styles.quoteRow}>
+              <Text style={styles.quoteLabel}>
+                {data.salaryLabel || "Salary (monthly) in new zealand doller:"}
+              </Text>
+              <Text style={styles.quoteValue}>{data.monthlySalary || ""}</Text>
+            </View>
+            <View style={styles.quoteRow}>
               <Text style={styles.quoteLabel}>Date of Sponsorship Approval:</Text>
               <Text style={styles.quoteValue}>{data.dateOfSponsorshipApproval}</Text>
             </View>
@@ -247,7 +276,63 @@ export const OfferLetterDocument: React.FC<OfferLetterDocumentProps> = ({ data }
         {/* Sponsor Block */}
         <View style={styles.sponsorBlock}>
           <Text style={styles.sponsorName}>{data.sponsorName}</Text>
-          <Text style={styles.sponsorAddress}>{data.sponsorAddress}</Text>
+          {data.sponsorWebsite ? (
+            <Text style={styles.sponsorDetail}>
+              <Text style={styles.sponsorBold}>Website: </Text>
+              <Link
+                src={
+                  data.sponsorWebsite.startsWith("http")
+                    ? data.sponsorWebsite
+                    : `https://${data.sponsorWebsite}`
+                }
+                style={styles.sponsorLink}
+              >
+                {data.sponsorWebsite}
+              </Link>
+            </Text>
+          ) : null}
+          {data.sponsorEmails && data.sponsorEmails.filter((e) => e && e.trim() !== "").length > 0 ? (
+            <View style={styles.sponsorEmailsContainer}>
+              {(() => {
+                const validEmails = data.sponsorEmails.filter((e) => e && e.trim() !== "");
+                const pairs: [string, string?][] = [];
+                for (let i = 0; i < validEmails.length; i += 2) {
+                  pairs.push([validEmails[i], validEmails[i + 1]]);
+                }
+                return pairs.map((pair, idx) => (
+                  <View key={idx} style={styles.sponsorEmailsRow}>
+                    <View style={styles.sponsorEmailCol}>
+                      <Text style={styles.sponsorDetail}>
+                        <Text style={styles.sponsorBold}>Email: </Text>
+                        <Link
+                          src={`mailto:${pair[0].replace(/^email\s*:\s*/i, "").trim()}`}
+                          style={styles.sponsorLink}
+                        >
+                          {pair[0].replace(/^email\s*:\s*/i, "").trim()}
+                        </Link>
+                      </Text>
+                    </View>
+                    <View style={styles.sponsorEmailCol}>
+                      {pair[1] ? (
+                        <Text style={styles.sponsorDetail}>
+                          <Text style={styles.sponsorBold}>Email: </Text>
+                          <Link
+                            src={`mailto:${pair[1].replace(/^email\s*:\s*/i, "").trim()}`}
+                            style={styles.sponsorLink}
+                          >
+                            {pair[1].replace(/^email\s*:\s*/i, "").trim()}
+                          </Link>
+                        </Text>
+                      ) : null}
+                    </View>
+                  </View>
+                ));
+              })()}
+            </View>
+          ) : null}
+          {data.sponsorAddress ? (
+            <Text style={styles.sponsorAddress}>{data.sponsorAddress}</Text>
+          ) : null}
         </View>
 
         {/* Centered Heading */}

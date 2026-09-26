@@ -112,9 +112,36 @@ export default function OfferLetterForm({ apiToken }: OfferLetterFormProps) {
   // Handle Form Change
   const handleChange = (
     field: keyof OfferLetterData,
-    value: string
+    value: any
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Handle Sponsor Emails Array
+  const handleAddEmail = () => {
+    const current = formData.sponsorEmails ? [...formData.sponsorEmails] : [];
+    setFormData((prev) => ({
+      ...prev,
+      sponsorEmails: [...current, ""],
+    }));
+  };
+
+  const handleEmailChange = (index: number, val: string) => {
+    const current = formData.sponsorEmails ? [...formData.sponsorEmails] : [""];
+    current[index] = val;
+    setFormData((prev) => ({
+      ...prev,
+      sponsorEmails: current,
+    }));
+  };
+
+  const handleRemoveEmail = (index: number) => {
+    const current = formData.sponsorEmails ? [...formData.sponsorEmails] : [];
+    current.splice(index, 1);
+    setFormData((prev) => ({
+      ...prev,
+      sponsorEmails: current.length > 0 ? current : [""],
+    }));
   };
 
   // Reset to reference
@@ -432,6 +459,96 @@ export default function OfferLetterForm({ apiToken }: OfferLetterFormProps) {
 
               <div>
                 <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
+                  Company Website URL
+                </label>
+                <input
+                  type="text"
+                  value={formData.sponsorWebsite || ""}
+                  onChange={(e) => handleChange("sponsorWebsite", e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 12px",
+                    border: "1px solid #d1d5db",
+                    borderRadius: "4px",
+                    fontSize: "14px",
+                    boxSizing: "border-box",
+                  }}
+                  placeholder="e.g. www.hdcontractor.co.nz"
+                />
+              </div>
+
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                  <label style={{ fontSize: "13px", fontWeight: "600", color: "#374151" }}>
+                    Company Emails (Displayed in 2 Columns on PDF)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleAddEmail}
+                    style={{
+                      backgroundColor: "#0062a4",
+                      color: "#ffffff",
+                      border: "none",
+                      borderRadius: "3px",
+                      padding: "4px 10px",
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                    }}
+                  >
+                    + Add Email
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {(formData.sponsorEmails && formData.sponsorEmails.length > 0
+                    ? formData.sponsorEmails
+                    : [""]
+                  ).map((email, idx) => (
+                    <div key={idx} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => handleEmailChange(idx, e.target.value)}
+                        style={{
+                          flex: 1,
+                          padding: "9px 12px",
+                          border: "1px solid #d1d5db",
+                          borderRadius: "4px",
+                          fontSize: "14px",
+                          boxSizing: "border-box",
+                        }}
+                        placeholder={`e.g. ${idx === 0 ? "info@hdcontractor.co.nz" : "support@hdcontractor.co.nz"}`}
+                      />
+                      {(formData.sponsorEmails?.length || 0) > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveEmail(idx)}
+                          style={{
+                            backgroundColor: "#fee2e2",
+                            color: "#b91c1c",
+                            border: "1px solid #fecaca",
+                            borderRadius: "4px",
+                            padding: "8px 12px",
+                            fontSize: "13px",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
+                          title="Remove email"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <span style={{ fontSize: "11px", color: "#6b7280", marginTop: "4px", display: "block" }}>
+                  Emails are laid out in 2 columns in the PDF header (2 emails per row).
+                </span>
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
                   Sponsor Address
                 </label>
                 <input
@@ -534,24 +651,46 @@ export default function OfferLetterForm({ apiToken }: OfferLetterFormProps) {
                 </div>
               </div>
 
-              <div>
-                <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
-                  Date of Sponsorship Approval
-                </label>
-                <input
-                  type="text"
-                  value={formData.dateOfSponsorshipApproval}
-                  onChange={(e) => handleChange("dateOfSponsorshipApproval", e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: "9px 12px",
-                    border: "1px solid #d1d5db",
-                    borderRadius: "4px",
-                    fontSize: "14px",
-                    boxSizing: "border-box",
-                  }}
-                  placeholder="e.g. 03 September 2026"
-                />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                <div>
+                  <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
+                    Salary (monthly) in new zealand doller
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.monthlySalary ?? ""}
+                    onChange={(e) => handleChange("monthlySalary", e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "9px 12px",
+                      border: "1px solid #d1d5db",
+                      borderRadius: "4px",
+                      fontSize: "14px",
+                      boxSizing: "border-box",
+                    }}
+                    placeholder="e.g. $5,000"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
+                    Date of Sponsorship Approval
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.dateOfSponsorshipApproval}
+                    onChange={(e) => handleChange("dateOfSponsorshipApproval", e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "9px 12px",
+                      border: "1px solid #d1d5db",
+                      borderRadius: "4px",
+                      fontSize: "14px",
+                      boxSizing: "border-box",
+                    }}
+                    placeholder="e.g. 03 September 2026"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -777,6 +916,26 @@ export default function OfferLetterForm({ apiToken }: OfferLetterFormProps) {
                       fontSize: "14px",
                       boxSizing: "border-box",
                     }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#374151", marginBottom: "6px" }}>
+                    Salary Row Label (Optional Override)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.salaryLabel || ""}
+                    onChange={(e) => handleChange("salaryLabel", e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "9px 12px",
+                      border: "1px solid #d1d5db",
+                      borderRadius: "4px",
+                      fontSize: "14px",
+                      boxSizing: "border-box",
+                    }}
+                    placeholder="Salary (monthly) in new zealand doller:"
                   />
                 </div>
 
